@@ -19,6 +19,7 @@
 						Productos
 						<div class="card-header-actions">
 							<a class="btn btn-primary" href="{{ route('productos.create') }}">{{__('Añadir producto') }}</a>
+							<a class="btn btn-primary" href="{{ route('products.excel') }}">{{__('MS Excel') }}</a>
 						</div>
 					</div>
 					<div class="card-body">
@@ -43,6 +44,7 @@
     										</td>
     										<td>
     											<a class="btn btn-primary" href="{{ route('productos.show', $product->id) }}">{{ __('Ver') }}</a>
+    											<a class="btn btn-primary" href="{{ route('products.pdf', $product->id) }}">{{ __('PDF') }}</a>
     											<a class="btn btn-primary" href="{{ route('productos.edit', $product->id) }}">{{ __('Edita') }}</a>
     											<a class="btn btn-danger" href="javascript:;" onclick="deleteData('{{ $product->id }}', '{{ $product->name }} ')" data-id="{{ $product->id }}" data-toggle="modal" data-target="#delete_confirm">
     												{{ __('Eliminar') }}

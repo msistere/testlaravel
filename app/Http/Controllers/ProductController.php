@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Flash;
 use Redirect;
 use Illuminate\Support\Facades\Log;
+use Excel;
+use App\Exports\ProductsExport;
+use PDF;
 
 class ProductController extends Controller
 {
@@ -201,4 +204,27 @@ class ProductController extends Controller
         // Redirect to the group management page
         return redirect(route('productos.index'))->with('success', __('Producto eliminado correctamente.'));
     }
+    
+    /**
+     * Exporta los productos a MS Excel
+     */
+    public function excel(){
+        return Excel::download(new ProductsExport, 'productos.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+    
+    /**
+     * Exporta a PDF la ficha de un producto
+     * 
+     * @param Product $producto
+     */
+    public function pdf(Product $producto){
+        $data = [
+            'product' => $producto,
+        ];
+        
+        $pdf = PDF::loadView('admin.products.pdf.show', $data);
+        
+        return $pdf->download('producto_'.$producto->id.'.pdf');
+    }
 }
+

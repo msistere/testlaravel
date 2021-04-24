@@ -22,11 +22,17 @@ Route::get('/', function () {
     return view('admin.index'); 
 });
 
+Route::get('/admin', function () {
+        return view('admin.index');
+});
+
 Route::group(['prefix' => 'admin'], function () {        
     Route::resource('categorias', CategoryController::class);
     Route::resource('productos', ProductController::class);
     Route::resource('productos.tarifas', ProductPriceController::class);
     Route::resource('tarifas', PriceController::class);
     Route::resource('media', MediaController::class);
+    Route::get('productos_excel', [ProductController::class, 'excel'])->name('products.excel');
+    Route::get('productos/{producto}/pdf', [ProductController::class, 'pdf'])->name('products.pdf');
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
