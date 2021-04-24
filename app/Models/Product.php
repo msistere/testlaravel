@@ -25,4 +25,8 @@ class Product extends Model implements HasMedia
         $this->addMediaConversion('thumb')
         ->height(100);
     }
+    
+    public function prices(){
+        return $this->hasMany(Price::class);
+    }
 }

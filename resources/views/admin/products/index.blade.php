@@ -42,6 +42,7 @@
     											@endif
     										</td>
     										<td>
+    											<a class="btn btn-primary" href="{{ route('productos.show', $product->id) }}">{{ __('Ver') }}</a>
     											<a class="btn btn-primary" href="{{ route('productos.edit', $product->id) }}">{{ __('Edita') }}</a>
     											<a class="btn btn-danger" href="javascript:;" onclick="deleteData('{{ $product->id }}', '{{ $product->name }} ')" data-id="{{ $product->id }}" data-toggle="modal" data-target="#delete_confirm">
     												{{ __('Eliminar') }}

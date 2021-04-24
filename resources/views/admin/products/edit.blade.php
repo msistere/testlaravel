@@ -31,6 +31,33 @@
 				</div>
 			</div>
 		</div>
+		<div class="form-row">
+    		<div class="form-group col-auto">
+    			<div class="card">
+    				<div class="card-header">
+    					{!! Form::label('prices', __('Tarifas')) !!}
+    				</div>
+    				<div class="card-body">
+                    	<table id="prices">
+                    		<thead>
+                    			<th>{{ __('Inicio') }}</th>
+                    			<th>{{ __('Fin') }}</th>
+                    			<th>{{ __('Precio') }}</th>
+                    		</thead>
+                    		<tbody>
+                    		@foreach($producto->prices as $price)
+                    			<tr>
+                    				<td>{{ date('d/m/Y', strtotime($price->from)) }}</td>
+                    				<td>{{ date('d/m/Y', strtotime($price->to)) }}</td>
+                    				<td>{{ number_format($price, 2, ',', '.') }} &euro;</td>
+                    			</tr>
+                    		@endforeach
+                    		</tbody>
+                    	</table>
+                    </div>
+               </div>
+        	</div>
+		</div>
 	</div>
 </div>
 @endsection

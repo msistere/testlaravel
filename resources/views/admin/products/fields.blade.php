@@ -40,7 +40,6 @@
 	<div id="categories"></div>
 	{!!	$errors->first('categories', '<span class="help-block">:message</span>')	!!}
 </div>
-
 @section('scripts')
 <div class="modal modal-danger fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="image_delete_confirm_title" aria-hidden="true">
   <div class="modal-dialog">
@@ -110,6 +109,14 @@ $(document).ready(function() {
         function (e, data) {
 			$('#category_id_'+data.node.id).val(data.node.id);  
   		
+    });
+
+	$.fn.dataTable.moment( 'DD/MM/YYYY' );
+	$('#prices').DataTable({
+    	"order": [[0, "desc"]],
+    	language: {     
+        	url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+		}
     });
 });
 </script>

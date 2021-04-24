@@ -96,16 +96,14 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el detalle de un producto
      *
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Product $producto)
     {
-        $categories = app('rinvex.categories.category')->get()->toFlatTree();
-        
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.show', compact('producto'));
     }
 
     /**
