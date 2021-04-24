@@ -36,20 +36,30 @@
     			<div class="card">
     				<div class="card-header">
     					{!! Form::label('prices', __('Tarifas')) !!}
+    					<div class="card-header-actions">
+							<a class="btn btn-primary" href="{{ route('productos.tarifas.create', $producto->id) }}">{{__('Añadir tarifa') }}</a>
+						</div>
     				</div>
     				<div class="card-body">
                     	<table id="prices">
                     		<thead>
                     			<th>{{ __('Inicio') }}</th>
                     			<th>{{ __('Fin') }}</th>
-                    			<th>{{ __('Precio') }}</th>
+                    			<th>{{ __('Tarifa') }} (€)</th>
+                    			<th>{{ __('Acciones') }}</th>
                     		</thead>
                     		<tbody>
                     		@foreach($producto->prices as $price)
                     			<tr>
                     				<td>{{ date('d/m/Y', strtotime($price->from)) }}</td>
                     				<td>{{ date('d/m/Y', strtotime($price->to)) }}</td>
-                    				<td>{{ number_format($price, 2, ',', '.') }} &euro;</td>
+                    				<td>{{ number_format($price->price, 2, ',', '.') }} &euro;</td>
+                    				<td>
+                    					<a class="btn btn-primary" href="{{ route('productos.tarifas.edit', ['producto' => $producto->id, 'tarifa' => $price->id]) }}">{{ __('Edita') }}</a>
+    									<a class="btn btn-danger" href="javascript:;" onclick="deletePrice({{ $price->id }}, '{{ number_format($price->price, 2, ',', '.') }}')" data-id="{{ $price->id }}" data-toggle="modal" data-target="#price_delete_confirm">
+    										{{ __('Eliminar') }}
+    									</a>
+                    				</td>
                     			</tr>
                     		@endforeach
                     		</tbody>

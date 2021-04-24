@@ -63,14 +63,40 @@
     </div>
   </div>
 </div>
-
+<div class="modal modal-danger fade" id="price_delete_confirm" tabindex="-1" role="dialog" aria-labelledby="price_delete_confirm_title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="deleteLabel">Eliminar tarifa</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+      <p>{{ __('¿Estás seguro de eliminar esta tarifa? Esta operación es irreversible.') }}</p>
+      <div id="tarifa" class="text-center"></div> 
+      </div>
+      <div class="modal-footer">
+      	<form id="deleteFormPrice" method="post">
+      	{{ csrf_field() }}
+        {{ method_field('DELETE') }}
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancelar') }}</button>
+        <button type="submit" class="btn btn-danger pull-right delete-confirm text-white">{{ __('Sí, elimínala') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-
 function deleteData(id, image){
 	var url = '{{ url("admin/media") }}';
     url = url+"/"+ id;
     $('#photo').html('<image src="'+image+'"  style="max-height: 100px" />');
     $("#deleteForm").attr('action', url);
+}
+function deletePrice(id, price){
+	var url = '{{ url("admin/tarifas") }}';
+    url = url+"/"+ id;
+    $('#tarifa').html(price+' €');
+    $("#deleteFormPrice").attr('action', url);
 }
 
 $(document).ready(function() {

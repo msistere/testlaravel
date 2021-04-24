@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductPriceController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\MediaController;
 
 /*
@@ -23,6 +25,8 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function () {        
     Route::resource('categorias', CategoryController::class);
     Route::resource('productos', ProductController::class);
+    Route::resource('productos.tarifas', ProductPriceController::class);
+    Route::resource('tarifas', PriceController::class);
     Route::resource('media', MediaController::class);
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });

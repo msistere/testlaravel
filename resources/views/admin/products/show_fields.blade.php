@@ -40,14 +40,14 @@
     		<thead>
     			<th>{{ __('Inicio') }}</th>
     			<th>{{ __('Fin') }}</th>
-    			<th>{{ __('Precio') }}</th>
+    			<th class="text-right">{{ __('Tarifa') }} (€)</th>
     		</thead>
     		<tbody>
     		@foreach($producto->prices as $price)
     			<tr>
     				<td>{{ date('d/m/Y', strtotime($price->from)) }}</td>
     				<td>{{ date('d/m/Y', strtotime($price->to)) }}</td>
-    				<td>{{ number_format($price, 2, ',', '.') }} &euro;</td>
+    				<td class="text-right">{{ number_format($price->price, 2, ',', '.') }} &euro;</td>
     			</tr>
     		@endforeach
     		</tbody>

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Price;
 use Illuminate\Http\Request;
+use Flash;
+use Redirect;
+use Illuminate\Support\Facades\Log;
 
 class PriceController extends Controller
 {
@@ -50,14 +53,14 @@ class PriceController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario de edición de un precio
      *
-     * @param  \App\Models\Price  $price
+     * @param  \App\Models\Price  $tarifa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Price $price)
+    public function edit(Price $tarifa)
     {
-        //
+        return view('admin.products.prices.edit', compact('tarifa'));
     }
 
     /**
@@ -73,13 +76,26 @@ class PriceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina la tarifa del producto indicado
      *
-     * @param  \App\Models\Price  $price
+     * @param  $id identificador de la tarifa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Price $price)
+    public function destroy($id)
     {
-        //
+        try {
+            
+            $price = Price::find($id);             
+            $price->delete();
+            
+        } catch (\Exception $ex) {
+            $error = __('Se ha producido un error al intentar eliminar la tarifa.');
+            Log::error($ex);
+            Flash::error($error);
+            return Redirect::back();
+        }
+        
+        // Redirect to the group management page
+        return Redirect::back()->with('success', __('Tarifa eliminada correctamente.'));
     }
 }

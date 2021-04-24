@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Price extends Model
 {
     use HasFactory;
+    
+    protected $casts = [
+        'from' => 'date',
+        'to' => 'date',
+        'price' => 'double',
+    ];
 }
