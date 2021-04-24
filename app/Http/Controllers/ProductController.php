@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Excel;
 use App\Exports\ProductsExport;
 use PDF;
+use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
@@ -21,8 +22,39 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index');
+    }
+    
+    /**
+     * Calcula el listado de productos para datatables
+     * 
+     * @return json datatable
+     */
+    public function data(){
+        $products = Product::orderBy('name')->get();
+        
+        return Datatables::of($products)
+            ->addColumn(
+                'image',
+                function (Product $product) {
+                    $image = '';
+                    $picture = $product->getFirstMediaUrl('images', 'thumb');
+                    if(!empty($picture)){
+                        $image = '<img src="'.$picture.'" />';
+                    }
+                    return $image;
+                })
+            ->addColumn(
+                'actions',
+                function (Product $product) {
+                    return '<a class="btn btn-primary" href="'.route('productos.show', $product->id).'">'.__('Ver').'</a>
+    						<a class="btn btn-primary" href="'.route('products.pdf', $product->id).'">'.__('PDF').'</a>
+    						<a class="btn btn-primary" href="'.route('productos.edit', $product->id).'">'.__('Edita').'</a>
+    						<a class="btn btn-danger" href="javascript:;" onclick="deleteData(\''.$product->id.'\', \''.$product->name.'\')" data-id="'.$product->id.'" data-toggle="modal" data-target="#delete_confirm">'.
+    						__('Eliminar').'</a>';
+                })
+                ->rawColumns(['image', 'actions'])
+                ->make(true);
     }
 
     /**

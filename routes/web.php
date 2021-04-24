@@ -29,6 +29,7 @@ Route::get('/admin', function () {
 Route::group(['prefix' => 'admin'], function () {        
     Route::resource('categorias', CategoryController::class);
     Route::resource('productos', ProductController::class);
+    Route::get('products/data', [ProductController::class, 'data'])->name('products.data');
     Route::resource('productos.tarifas', ProductPriceController::class);
     Route::resource('tarifas', PriceController::class);
     Route::resource('media', MediaController::class);

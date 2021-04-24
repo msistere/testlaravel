@@ -31,28 +31,6 @@
 								<th>{{ __('Acciones') }}</th>
 							</thead>
 							<tbody>
-								@if(!empty($products))
-    								@foreach($products as $product)
-    									<tr>
-    										<td>{{ $product->id }}</td>
-    										<td>{{ $product->name }}</td>
-    										<td>
-    											@php $picture = $product->getFirstMediaUrl('images', 'thumb') @endphp
-    											@if(!empty($picture))
-    											<img src="{{ $picture }}" />
-    											@endif
-    										</td>
-    										<td>
-    											<a class="btn btn-primary" href="{{ route('productos.show', $product->id) }}">{{ __('Ver') }}</a>
-    											<a class="btn btn-primary" href="{{ route('products.pdf', $product->id) }}">{{ __('PDF') }}</a>
-    											<a class="btn btn-primary" href="{{ route('productos.edit', $product->id) }}">{{ __('Edita') }}</a>
-    											<a class="btn btn-danger" href="javascript:;" onclick="deleteData('{{ $product->id }}', '{{ $product->name }} ')" data-id="{{ $product->id }}" data-toggle="modal" data-target="#delete_confirm">
-    												{{ __('Eliminar') }}
-    											</a>
-    										</td>
-    									</tr>
-    								@endforeach
-    							@endif
 							</tbody>
 						</table>
 					</div>
@@ -94,12 +72,26 @@ function deleteData(id, name){
     $("#deleteForm").attr('action', url);
 }
 $(document).ready( function () {
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	
     $('#products').DataTable({
+    	processing: true,
+    	serverSide: true,
+    	deferRender: true,
     	"order": [[1, "asc"]],
-    	"columnDefs": [
-    	    { "orderable": false, searchable: false, "targets": 2 },
-    	    { "orderable": false, searchable: false, "targets": 3 }
-    	  ],
+    	ajax: {
+        	url: "{!! route('products.data') !!}",
+        },
+        columns: [
+        	{ data: 'id', name: 'id'},
+            { data: 'name', name: 'name'},
+            { data: 'image', name: 'image', searchable: false, orderable: false},
+            { data: 'actions', name: 'actions', searchable: false, orderable: false }
+        ],
     	language: {     
         	url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
 		}

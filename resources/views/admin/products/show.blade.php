@@ -20,6 +20,7 @@
 						{{ __('Ver producto') }}: <b>{{ $producto->name }}</b>
 						<div class="card-header-actions">
                 			<a class="btn btn-primary" href="{{ route('productos.edit', $producto->id) }}">{{ __('Editar producto') }}</a>
+                			<a class="btn btn-primary" href="{{ route('products.pdf', $producto->id) }}">{{ __('PDF') }}</a>
                 			<a class="btn btn-danger" href="javascript:;" onclick="deleteData('{{ $producto->id }}', '{{ $producto->name }}')" data-id="{{ $producto->id }}" data-toggle="modal" data-target="#delete_confirm">
     						{{ __('Eliminar producto') }}
     						</a>
