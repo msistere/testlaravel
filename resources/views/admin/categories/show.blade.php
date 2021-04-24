@@ -19,7 +19,10 @@
 					<div class="card-header">
 						{{ __('Ver categoría') }}: <b>{{ $category->name }}</b>
 						<div class="card-header-actions">
-                			<a class="btn btn-block btn-primary" href="{{ route('categorias.edit', $category->id) }}">{{ __('Editar categoría') }}</a>
+                			<a class="btn btn-primary" href="{{ route('categorias.edit', $category->id) }}">{{ __('Editar categoría') }}</a>
+                			<a class="btn btn-danger" href="javascript:;" onclick="deleteData('{{ $category->id }}', '{{ $category->name }}')" data-id="{{ $category->id }}" data-toggle="modal" data-target="#delete_confirm">
+    						{{ __('Eliminar categoría') }}
+    						</a>
                 		</div>
 					</div>
 					<div class="card-body">

@@ -20,7 +20,36 @@
 </div>
 
 @section('scripts')
+<div class="modal modal-danger fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="category_delete_confirm_title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="deleteLabel">{{ __('Eliminar categoría') }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+      <p>{{ __('¿Estás seguro de eliminar esta categoría? Esta operación es irreversible, y eliminará sus categorías inferiores. Así como su relación con los productos.') }}</p>
+      <p><b id="category"></b></p>
+      </div>
+      <div class="modal-footer">
+      	<form id="deleteForm" method="post">
+      	{{ csrf_field() }}
+        {{ method_field('DELETE') }}
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancelar') }}</button>
+        <button type="submit" class="btn btn-danger pull-right delete-confirm text-white">{{ __('Sí, elimínala') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
+function deleteData(id, name){
+	var url = '{{ url(("admin/categorias")) }}';
+    url = url+"/"+ id;
+    $('#category').html(name);
+    $("#deleteForm").attr('action', url);
+}
+
 $(document).ready(function() {
 	var $ancestors = $('#ancestors');
 	$ancestors.jstree({ 'core' : {			
