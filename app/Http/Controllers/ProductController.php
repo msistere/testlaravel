@@ -98,7 +98,9 @@ class ProductController extends Controller
                 //Imágenes
                 if ($images = $request->file('image')) {
                     foreach ($images as $image) {
-                        $product->addMedia($image)->usingName($product->name)
+                        $extension = $image->extension();
+                        $safeName = hexdec(uniqid()) . '.' . $extension;
+                        $product->addMedia($image)->setFileName($safeName)->usingName($product->name)
                             ->toMediaCollection('images');
                     }
                 }
@@ -182,7 +184,9 @@ class ProductController extends Controller
                 //Imágenes
                 if ($images = $request->file('image')) {
                     foreach ($images as $image) {
-                        $producto->addMedia($image)->usingName($producto->name)
+                        $extension = $image->extension();
+                        $safeName = hexdec(uniqid()) . '.' . $extension;
+                        $producto->addMedia($image)->setFileName($safeName)->usingName($producto->name)
                         ->toMediaCollection('images');
                     }
                 }
@@ -241,7 +245,7 @@ class ProductController extends Controller
      * Exporta los productos a MS Excel
      */
     public function excel(){
-        return Excel::download(new ProductsExport, 'productos.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new ProductsExport, 'productos.xlsx');
     }
     
     /**

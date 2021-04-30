@@ -15,6 +15,15 @@ class Product extends Model implements HasMedia
     use InteractsWithMedia;
     use Categorizable;
     
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description'
+    ];
+    
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images');

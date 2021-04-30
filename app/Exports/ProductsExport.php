@@ -3,15 +3,15 @@
 namespace App\Exports;
 
 use App\Models\Product;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class ProductsExport implements FromCollection
+class ProductsExport implements FromView, ShouldAutoSize
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
-    {
-        return Product::all();
+    public function view(): View {
+         return view('admin.products.excel.products', [
+             'products' => Product::orderBy('name', 'asc')->get()
+         ]);
     }
 }

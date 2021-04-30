@@ -49,6 +49,25 @@ class ProductPriceController extends Controller
                 'price' => 'required|numeric',
             ]);
             
+            //Comprobamos que no exista una tarifa ya en ese intervalo
+            $validator->after(function() use ($request, $validator) {
+                $nPrices = Price::where('product_id', $request->product_id)
+                            ->where('from', '<=', date('Y-m-d', strtotime($request->from)))
+                            ->where('to', '>=', date('Y-m-d', strtotime($request->from)))
+                            ->count();
+                if($nPrices > 0){
+                    $validator->errors()->add('from', __("Ya existe una tarifa para este producto que incluye este intervalo de tiempo."));
+                }
+                
+                $nPrices = Price::where('product_id', $request->product_id)
+                    ->where('from', '>=', $request->to)
+                    ->where('to', '<=', $request->to)
+                    ->count();
+                if($nPrices > 0){
+                    $validator->errors()->add('to', __("Ya existe una tarifa para este producto que incluye este intervalo de tiempo."));
+                }
+            });
+            
             if (!$validator->fails()) {
                 $price = new Price();
                 $price->product_id = $request->product_id;
@@ -109,6 +128,25 @@ class ProductPriceController extends Controller
                 'to' => 'required|date',
                 'price' => 'required|numeric',
             ]);
+            
+            //Comprobamos que no exista una tarifa ya en ese intervalo
+            $validator->after(function() use ($request, $validator) {
+                $nPrices = Price::where('product_id', $request->product_id)
+                    ->where('from', '=<', date('Y-m-d', strtotime($request->from)))
+                    ->where('to', '>=', date('Y-m-d', strtotime($request->from)))
+                    ->count();
+                if($nPrices > 0){
+                    $validator->errors()->add('from', __("Ya existe una tarifa para este producto que incluye este intervalo de tiempo."));
+                }
+                
+                $nPrices = Price::where('product_id', $request->product_id)
+                ->where('from', '>=', $request->to)
+                ->where('to', '<=', $request->to)
+                ->count();
+                if($nPrices > 0){
+                    $validator->errors()->add('to', __("Ya existe una tarifa para este producto que incluye este intervalo de tiempo."));
+                }
+            });
             
             if (!$validator->fails()) {
                 $tarifa->from = $request->from;

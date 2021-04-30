@@ -33,24 +33,35 @@
     <!-- Tree -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
     
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
     <!-- Main styles for this application-->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
   </head>
   <body class="c-app">
+  	
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
       <div class="c-sidebar-brand d-lg-down-none">
-      	<a href="{{ url('/') }}">
-        	<img class="c-sidebar-brand-full" height="46" src="{{ asset('/assets/brand/logo.svg') }}" alt="Logo"/>
-        	<img class="c-sidebar-brand-minimized" height="46" src="{{ asset('/assets/brand/logo.svg') }}" alt="Logo"/>
-        </a>
+      	<!-- a href="{{ route('dashboard') }}" -->
+      		<svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+              <use xlink:href="{{ asset('/assets/brand/coreui.svg') }}#full"></use>
+            </svg>
+            <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
+              <use xlink:href="{{ asset('/assets/brand/coreui.svg') }}#signet"></use>
+            </svg>
+        <!-- /a -->
       </div>
       <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ url('admin/categorias') }}">
             <i class="c-sidebar-nav-icon cil-tags"> </i> Categorías</a></li>
         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ url('admin/productos') }}">
             <i class="c-sidebar-nav-icon cil-3d"> </i> Productos</a></li>        
+        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ url('admin/pedidos') }}">
+            <i class="c-sidebar-nav-icon cil-cart"> </i> Pedidos</a></li>
         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ url('admin/logs') }}" target="_blank">
             <i class="c-sidebar-nav-icon cil-bug"> </i> Logs</a></li>
       </ul>
@@ -61,19 +72,21 @@
         <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
         	<i class="c-icon c-icon-lg cil-menu"></i>
         </button><a class="c-header-brand d-lg-none" href="#">
-          <svg width="118" height="46" alt="Logo">
-            <use xlink:href="{{ asset('/assets/brand/logo.svg') }}"></use>
-          </svg></a>
+          <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+              <use xlink:href="{{ asset('/assets/brand/coreui.svg') }}#full"></use>
+            </svg></a>
         <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
           <i class="c-icon c-icon-lg cil-menu"></i>
         </button>
         <ul class="c-header-nav ml-auto mr-4">          
           <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <div class="c-avatar"><img class="c-avatar-img" src="{{ asset('assets/img/avatar.png') }}" alt="user@email.com"></div>
-            </a>
+            </a>            
             <div class="dropdown-menu dropdown-menu-right pt-0">
-              <a class="dropdown-item" href="#">
-              	<i class="c-icon cil-account-logout mr-2"> </i> Cerrar sesión</a>
+            	<a class="dropdown-item" href="#">{{ Auth::user()->name }}</a>
+            	<div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ route('logout') }}">
+              	<i class="c-icon cil-account-logout mr-2"> </i> {{ __('Cerrar sesión') }}</a>
             </div>
           </li>
         </ul>
@@ -100,7 +113,6 @@
     
     <!-- Bootstrap -->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-filestyle.min.js') }}"></script>
     
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
@@ -114,6 +126,10 @@
     
     <!-- Tree -->    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <script type="text/javascript">
     (function () {
     	  'use strict'

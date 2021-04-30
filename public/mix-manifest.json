@@ -1,6 +1,8 @@
 {
     "/css/style.css": "/css/style.css",
     "/css/bootstrap.min.css": "/css/bootstrap.min.css",
+    "/css/bootstrap.min.css.map": "/css/bootstrap.min.css.map",
+    "/css/fullcalendar/main.min.css": "/css/fullcalendar/main.min.css",
     "/css/app.css": "/css/app.css",
     "/fonts/CoreUI-Icons-Brand.eot": "/fonts/CoreUI-Icons-Brand.eot",
     "/fonts/CoreUI-Icons-Brand.svg": "/fonts/CoreUI-Icons-Brand.svg",
@@ -13,7 +15,11 @@
     "/fonts/CoreUI-Icons-Free.woff": "/fonts/CoreUI-Icons-Free.woff",
     "/fonts/CoreUI-Icons-Free.woff2": "/fonts/CoreUI-Icons-Free.woff2",
     "/css/free.min.css": "/css/free.min.css",
+    "/css/free.min.css.map": "/css/free.min.css.map",
     "/js/coreui.bundle.min.js": "/js/coreui.bundle.min.js",
+    "/js/coreui.bundle.min.js.map": "/js/coreui.bundle.min.js.map",
     "/js/bootstrap.bundle.min.js": "/js/bootstrap.bundle.min.js",
-    "/js/bootstrap-filestyle.min.js": "/js/bootstrap-filestyle.min.js"
+    "/js/bootstrap.bundle.min.js.map": "/js/bootstrap.bundle.min.js.map",
+    "/js/fullcalendar/main.min.js": "/js/fullcalendar/main.min.js",
+    "/js/fullcalendar/es.js": "/js/fullcalendar/es.js"
 }
