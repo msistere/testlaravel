@@ -10,7 +10,7 @@
 	<select id="product_id" name="product_id"  class="form-control" required>
 		<option value="">{{ __('Selecciona') }}</option>
 		@foreach($products as $product)
-			<option value="{{ $product->id }}">{{ $product->name }}</option>
+			<option value="{{ $product->id }}" data-price="{{ $product->prices()->first()->price }}">{{ $product->name }}</option>
 		@endforeach
 	</select>
 	{!!	$errors->first('product_id', '<span class="help-block">:message</span>')	!!}
@@ -49,24 +49,26 @@ $(document).ready(function() {
         $('#save').prop("disabled",true);
     @endif
 
-    var products = {
-    	    'products':[
-        @foreach($products as $product)
-        {
-            	'product_id': {{ $product->id }},
-            	'prices': [
-                	@foreach($product->prices()->where('from', '<=', $dateorder)->where('to', '>=', $dateorder)->get() as $price)
-                	{'price_id': {{ $price->id }},	'price': {{ $price->price }} },
-                	@endforeach
-            	]
-        },
-        @endforeach
-    ]};
+    @if(!empty($pedido))
+        @php $line = $pedido->orderlines()->first(); @endphp
+    	$('select[name="product_id"]').val({{ $line->product_id }}).trigger('change');
+        $('input[name="price"]').val($('select[name="product_id"]').find(':selected').attr('data-price'));
+        $('input[name="units"]').val('{{ $line->units }}');
+        $('input[name="total"]').val($('input[name="price"]').val()*$('input[name="units"]').val());
+    @endif
 
     $('select[name="product_id"]').on('change', function() {
-        //($(this).val());
-        alert(products['products']);
+        $('input[name="price"]').val($(this).find(':selected').attr('data-price'));
+        $('input[name="total"]').val($('input[name="price"]').val()*$('input[name="units"]').val());
     });
+
+    $('input[name="units"]').on('blur', function() {
+        $('input[name="total"]').val($('input[name="price"]').val()*$('input[name="units"]').val());
+    });
+
+    
+    
+    
 });
 </script>
 @endsection

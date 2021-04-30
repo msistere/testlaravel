@@ -50,7 +50,18 @@
           	dateClick: function(info) {
               	$('#dateorder').val(info.dateStr);
               	$('#pedidos').submit();
-          	}
+          	},
+          	events : [
+                
+                @foreach($orders as $order)
+                {
+                	title: "Pedido {!! $order->id !!}",
+               		start : '{{ date('Y-m-d', strtotime($order->dateorder)) }}',
+                     end : '{{ date('Y-m-d', strtotime($order->dateorder)) }}',
+               		url : '{{ route('pedidos.show', $order->id) }}',
+               	},
+                @endforeach
+           ]
         });
         calendar.render();
       });
